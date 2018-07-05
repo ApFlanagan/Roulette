@@ -3,7 +3,7 @@ function onButtonClick() {
       filters: [{
         services: ['battery_service']
       }]
-    })
+    }) 
     .then(device => device.gatt.connect())
     .then(server => {
       // Getting Battery Service...
