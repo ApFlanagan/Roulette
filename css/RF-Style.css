@@ -123,9 +123,7 @@ body {
 }
 
 .loader {
-  left: 30%;
-  top: 125px;
-  position: fixed;
+  display: inline-block;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
