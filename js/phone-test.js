@@ -1,7 +1,8 @@
 function onButtonClick() {
   navigator.bluetooth.requestDevice({
       filters: [{
-        services: ['battery_service']
+        // services: ['battery_service']
+        acceptAllDevices: true
       }]
     })
     .then(device => device.gatt.connect())
