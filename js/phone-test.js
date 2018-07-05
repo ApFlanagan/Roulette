@@ -3,7 +3,7 @@ function onButtonClick() {
       filters: [{
         services: ['battery_service']
       }]
-    }) 
+    })
     .then(device => device.gatt.connect())
     .then(server => {
       // Getting Battery Service...
@@ -18,7 +18,7 @@ function onButtonClick() {
       return characteristic.readValue();
     })
     .then(value => {
-      console.log('Battery percentage is ' + value.getUint8(0));
+      console.log(value);
     })
     .catch(error => {
       console.log(error);

@@ -6,6 +6,7 @@ var bluetoothDevice = null;
 var microbitUUID = 'e95d0000-251d-470a-a062-fa1922dfa9a8'
 var accUUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8';
 var accCharUUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
+var accPeriod = 'e95dfb24-251d-470a-a062-fa1922dfa9a'
 var AccelerometerCharacteristic = null;
 var accData = new Int16Array(3);
 
@@ -34,6 +35,7 @@ function connectDevice() {
   return bluetoothDevice.gatt.connect()
     .then(server => {
       // Getting Accelerometer Service...
+      primaryServer = server;
       return server.getPrimaryService(accUUID);
     })
     .then(service => {
@@ -62,6 +64,25 @@ function onButtonClick() {
       accData[2] = value.getInt16(2, 1);
       console.log(accData);
       document.getElementById('startButton').innerHTML = "Read";
+    })
+    .catch(error => {
+      console.log('Argh! ' + error);
+    });
+}
+
+function onPeriodButtonClick() {
+
+  return (primaryServer ? Promise.resolve() : onConnectClick())
+    .then(service => {
+      console.log('Accelerometer Period Characteristic:');
+      // Getting Accelerometer Characteristic
+      return service.getCharacteristic(accPeriod);
+    })
+    .then(characteristic => {
+      return characteristic.readValue();
+    })
+    .then(value => {
+      console.log('Accelerometer period is: ' + value.getUint8(0));
     })
     .catch(error => {
       console.log('Argh! ' + error);
