@@ -1,28 +1,30 @@
 function onButtonClick() {
-  navigator.bluetooth.requestDevice({
-      filters: [{
-        // services: ['battery_service']
-        acceptAllDevices: true,
-        optionalservices:[]
-      }]
-    })
-    .then(device => device.gatt.connect())
-    .then(server => {
-      // Getting Battery Service...
-      return server.getPrimaryService('battery_service');
-    })
-    .then(service => {
-      // Getting Battery Level Characteristic...
-      return service.getCharacteristic('battery_level');
-    })
-    .then(characteristic => {
-      // Reading Battery Level...
-      return characteristic.readValue();
-    })
-    .then(value => {
-      console.log('Battery percentage is ' + value.getUint8(0));
-    })
-    .catch(error => {
-      console.log(error);
-    });
-}
+  navigator.getDevices(function(devices) {
+        for (var i = 0; i < devices.length; i++) {
+          console.log(devices[i].address);
+        }
+        navigator.bluetooth.requestDevice({
+            filters: [{
+              services: ['battery_service']
+            }]
+          })
+          .then(device => device.gatt.connect())
+          .then(server => {
+            // Getting Battery Service...
+            return server.getPrimaryService('battery_service');
+          })
+          .then(service => {
+            // Getting Battery Level Characteristic...
+            return service.getCharacteristic('battery_level');
+          })
+          .then(characteristic => {
+            // Reading Battery Level...
+            return characteristic.readValue();
+          })
+          .then(value => {
+            console.log('Battery percentage is ' + value.getUint8(0));
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
