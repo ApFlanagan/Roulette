@@ -70,8 +70,7 @@ function onButtonClick() {
     });
 }
 
-function onPeriodButtonClick() {
-
+function onPeriodButtonClick() {  
   return (primaryServer ? Promise.resolve() : onConnectClick())
     .then(service => {
       console.log('Accelerometer Period Characteristic:');
