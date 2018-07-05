@@ -10,7 +10,6 @@ var AccelerometerCharacteristic = null;
 var accData = new Int16Array(3);
 
 function onConnectClick() {
-
   navigator.bluetooth.requestDevice({
       filters: [{
         services: [accUUID]
