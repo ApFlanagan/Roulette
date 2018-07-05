@@ -123,9 +123,11 @@ body {
 }
 
 .loader {
-  display: block;
-  /* -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%); */
+  left: 150px;
+  top: 125px;
+  position: fixed;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 .loader #spinner {
