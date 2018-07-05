@@ -8,12 +8,9 @@ var accUUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8';
 var accCharUUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
 var AccelerometerCharacteristic = null;
 var accData = new Int16Array(3);
-let spinner = document.querySelector('.loader');
-spinner.setAttribute('hidden', true);
 
 function onConnectClick() {
 
-  spinner.removeAttribute('hidden')
   navigator.bluetooth.requestDevice({
       filters: [{
         services: [accUUID]
@@ -49,7 +46,6 @@ function connectDevice() {
       AccelerometerCharacteristic = characteristic;
       console.log('>>' + AccelerometerCharacteristic.uuid);
       document.getElementById('connectButton').innerHTML = "Connected";
-      spinner.setAttribute('hidden', true);
       document.getElementById('disconnectButton').innerHTML = "Disconnect";
     });
 }
