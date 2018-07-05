@@ -9,6 +9,7 @@ var accCharUUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
 var accPeriod = 'e95dfb24-251d-470a-a062-fa1922dfa9a'
 var AccelerometerCharacteristic = null;
 var accData = new Int16Array(3);
+var primaryServer;
 
 function onConnectClick() {
   navigator.bluetooth.requestDevice({
@@ -70,7 +71,7 @@ function onButtonClick() {
     });
 }
 
-function onPeriodButtonClick() {  
+function onPeriodButtonClick() {
   return (primaryServer ? Promise.resolve() : onConnectClick())
     .then(service => {
       console.log('Accelerometer Period Characteristic:');
