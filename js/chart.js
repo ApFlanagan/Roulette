@@ -14,7 +14,7 @@ var primaryServer;
 function onConnectClick() {
   navigator.bluetooth.requestDevice({
       filters: [{
-        services: ['generic_access',accCharUUID]
+        namePrefix: 'BBC Mirco:bit',
       }]
     })
     .then(device => {
