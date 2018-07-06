@@ -37,12 +37,12 @@ function connectDevice() {
     .then(server => {
       // Getting Accelerometer Service...
       primaryServer = server;
-      return server.getPrimaryService('human_interface_device');
+      return server.getPrimaryService(accCharUUID);
     })
     .then(service => {
       console.log('Accelerometer Data Characteristic:');
       // Getting Accelerometer Characteristic
-      return service.getCharacteristic('hid_information');
+      return service.getCharacteristic(accUUID);
     })
     .then(characteristic => {
       AccelerometerCharacteristic = characteristic;
