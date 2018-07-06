@@ -3,7 +3,7 @@
 // });
 // google.charts.setOnLoadCallback(drawChart);
 var bluetoothDevice = null;
-var versionNumber = 1.1;
+var versionNumber = 1.2;
 var microbitUUID = 'e95d0000-251d-470a-a062-fa1922dfa9a8';
 var accServiceUUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8';
 var accDataUUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
@@ -30,25 +30,21 @@ function onConnectClick() {
       return bluetoothDevice.gatt.connect();
     })
     .then(server => {
-        // Getting Accelerometer Service...
-        console.log('Found GATT Server');
-        gattServer = server;
-        console.log(gattServer);
-        return gattServer.getPrimaryService(accServiceUUID);
-      })
-      .then(service => {
-        console.log('Found Data Characteristic');
-        AccelerometerService = service;
-        // Getting Accelerometer Characteristic
-        return AccelerometerService.getCharacteristic(accDataUUID);
-      })
-      .then(characteristic => {
-        AccelerometerData = characteristic;
-        AccelerometerData
-        document.getElementById('connectButton').innerHTML = "Connected";
-        document.getElementById('disconnectButton').innerHTML = "Disconnect";
-      });
-    // .then(connectDevice);
+      // Getting Accelerometer Service...
+      console.log('Found GATT Server');
+      gattServer = server;
+      console.log(gattServer);
+      return gattServer.getPrimaryService(accServiceUUID);
+    })
+    .then(service => {
+      AccelerometerService = service;
+      document.getElementById('connectButton').innerHTML = "Connected";
+      document.getElementById('disconnectButton').innerHTML = "Disconnect";
+      // Getting Accelerometer Characteristic
+    })
+    .then(characteristic => {
+    });
+  // .then(connectDevice);
 }
 
 //
@@ -76,16 +72,21 @@ function onConnectClick() {
 // }
 
 function onButtonClick() {
-  return (AccelerometerData ? Promise.resolve() : onConnectClick())
-    .then(_ => {
+  return (AccelerometerService ? Promise.resolve() : onConnectClick())
+    .then(_= > {
+      console.log('Found Data Characteristic');
+      return AccelerometerService.getCharacteristic(accDataUUID);
+    })
+    .then(characteristic => {
+      AccelerometerData = characteristic;
       document.getElementById('startButton').innerHTML = "Reading...";
       console.log('Reading Accelerometer...');
       return AccelerometerData.readValue();
     })
     .then(value => {
       accData[0] = value.getInt16(0, 1);
-      accData[1] = value.getInt16(1, 1);
-      accData[2] = value.getInt16(2, 1);
+      accData[1] = value.getInt16(2, 1);
+      accData[2] = value.getInt16(4, 1);
       console.log(accData);
       document.getElementById('startButton').innerHTML = "Read";
     })
@@ -97,9 +98,8 @@ function onButtonClick() {
 function onPeriodButtonClick() {
   return (AccelerometerService ? Promise.resolve() : onConnectClick())
     .then(_ => {
-      console.log('Accelerometer Period Characteristic:');
-      // Getting Accelerometer Characteristic
-      return service.getCharacteristic(accPeriod);
+      console.log('Found Period Characteristic');
+      return AccelerometerService.getCharacteristic(accPeriod);
     })
     .then(characteristic => {
       AccelerometerPeriod = characteristic;
