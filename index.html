@@ -15,12 +15,16 @@
       <div class="container">
         <h3>Accelerometer Data</h3>
         <div>
-          <button onclick="onConnectClick()" id="connectButton" class="connect">Connect</button>
+          <div>
+            <button onclick="onConnectClick()" id="connectButton" class="connect">Connect</button>
+          </div>
           <button onclick="onButtonClick()" id="startButton">Read</button>
           <button onclick="onPeriodButtonClick()" id="periodButton">Period</button>
           <button onclick="setPeriodTo1()" id="periodButton">Set Period</button>
           <button onclick="onDisconnectButton()" id="disconnectButton">Disconnect</button>
           <hr />
+          <div class='data-container'>
+          </div>
           <a href="../Roulette/phone.html">Battery Test Page</a>
         </div>
 

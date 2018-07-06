@@ -3,7 +3,7 @@
 // });
 // google.charts.setOnLoadCallback(drawChart);
 var bluetoothDevice = null;
-var versionNumber = 1.11;
+var versionNumber = 1.12;
 var microbitUUID = 'e95d0000-251d-470a-a062-fa1922dfa9a8';
 var accServiceUUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8';
 var accDataUUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
@@ -13,6 +13,7 @@ var AccelerometerPeriod = null;
 var AccelerometerService = null;
 var accData = new Int16Array();
 var gattServer;
+var data - container = document.querySelector('.data-container');
 
 function onConnectClick() {
   navigator.bluetooth.requestDevice({
@@ -86,23 +87,23 @@ function onPeriodButtonClick() {
 
 function setPeriodTo1() {
   return (AccelerometerService ? Promise.resolve() : onConnectClick())
-  .then(_ => {
-    console.log('Found Period Characteristic');
-    return AccelerometerService.getCharacteristic(accPeriod);
-  })
-  .then(characteristic => {
-    AccelerometerPeriod = characteristic;
-    return AccelerometerPeriod.writeValue(Uint16Array.of(1));
-  })
-  .then(_=> {
-    return AccelerometerPeriod.readValue();
-  })
-  .then(value => {
-    console.log('New Accelerometer period is: ' + value.getUint8(0));
-  })
-  .catch(error => {
-    console.log('Argh! ' + error);
-  });
+    .then(_ => {
+      console.log('Found Period Characteristic');
+      return AccelerometerService.getCharacteristic(accPeriod);
+    })
+    .then(characteristic => {
+      AccelerometerPeriod = characteristic;
+      return AccelerometerPeriod.writeValue(Uint16Array.of(1));
+    })
+    .then(_ => {
+      return AccelerometerPeriod.readValue();
+    })
+    .then(value => {
+      console.log('New Accelerometer period is: ' + value.getUint8(0));
+    })
+    .catch(error => {
+      console.log('Argh! ' + error);
+    });
 }
 
 function onDisconnectButton() {
@@ -136,6 +137,16 @@ function handleValueChange(event) {
 
   AcceleratorZ = event.target.value.getInt16(4);
   console.log('z: ' + AcceleratorZ);
+
+  data - container.innerHTML = {
+    '<p> Acceleration X: '
+    AcceleratorX '</p>'
+    '<p> Acceleration Y: '
+    AcceleratorY '</p>'
+    '<p> Acceleration Z: '
+    AcceleratorZ '</p>'
+  };
+
   // var accItem = new Int16Array();
   // accItem = [AcceleratorX, AcceleratorY, AcceleratorZ];
   // accData.push(accItem);
