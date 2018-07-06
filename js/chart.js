@@ -164,7 +164,7 @@ function onLogButton() {
     for (var j = 0; j < 3; j++) {
       data_container.write('<p>' + accData[i][j] + '</p>');
     }
-  });
+  }
 }
 
 // function drawChart() {
