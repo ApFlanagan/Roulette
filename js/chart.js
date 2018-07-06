@@ -1,9 +1,9 @@
-// google.charts.load('current', {
-//   'packages': ['corechart']
-// });
-// google.charts.setOnLoadCallback(drawChart);
+google.charts.load('current', {
+  'packages': ['corechart']
+});
+google.charts.setOnLoadCallback(drawChart);
 var bluetoothDevice = null;
-var versionNumber = '1.21.8';
+var versionNumber = '1.22.1';
 var microbitUUID = 'e95d0000-251d-470a-a062-fa1922dfa9a8';
 var accServiceUUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8';
 var accDataUUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
@@ -149,28 +149,30 @@ function handleValueChange(event) {
   AcceleratorZ = event.target.value.getInt16(4, 1);
   console.log('z: ' + AcceleratorZ);
 
-  var accItem = [AcceleratorX, AcceleratorY, AcceleratorZ];
+  var accItem = [timeStamp, AcceleratorX, AcceleratorY, AcceleratorZ];
   accData.push(accItem);
 
   data_container.innerHTML =
     '<p> Acceleration X: ' + AcceleratorX + '</p>' +
     '<p> Acceleration Y: ' + AcceleratorY + '</p>' +
     '<p> Acceleration Z: ' + AcceleratorZ + '</p>';
+
+  chart.update();
 }
 
 function onLogButton() {
   data_container.innerHTML = "";
   for (let i = 0; i < accData.length; i++) {
     data_container.innerHTML = data_container.innerHTML + '<p>';
-    for (let j = 0; j < 3; j++) {
+    for (let j = 1; j < 4; j++) {
       switch (j) {
-        case 0:
+        case 1:
           data_container.innerHTML = data_container.innerHTML + 'x: ';
           break;
-        case 1:
+        case 2:
           data_container.innerHTML = data_container.innerHTML + 'y: ';
           break;
-        case 2:
+        case 3:
           data_container.innerHTML = data_container.innerHTML + 'z: ';
           break;
         default:
@@ -182,24 +184,18 @@ function onLogButton() {
   }
 }
 
-// function drawChart() {
-//   var data = google.visualization.arrayToDataTable([
-//     ['Year', 'Sales', 'Expenses'],
-//     ['2004', 1000, 400],
-//     ['2005', 1170, 460],
-//     ['2006', 660, 1120],
-//     ['2007', 1030, 540]
-//   ]);
-//
-//   var options = {
-//     title: 'Accelerometer',
-//     curveType: 'none',
-//     legend: {
-//       position: 'bottom'
-//     }
-//   };
-//
-//   var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-//
-//   chart.draw(data, options);
-// }
+function drawChart() {
+  var data = google.visualization.arrayToDataTable(accData);
+
+  var options = {
+    title: 'Accelerometer',
+    curveType: 'none',
+    legend: {
+      position: 'bottom'
+    }
+  };
+
+  chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+  chart.draw(data, options);
+}

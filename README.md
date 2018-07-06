@@ -8,3 +8,6 @@ Update Log:
 
 1.21:
   Timestamping each value
+
+1.22
+  Dynamic chart
