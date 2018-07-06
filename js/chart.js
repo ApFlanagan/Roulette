@@ -152,7 +152,7 @@ function handleValueChange(event) {
 
 function onLogButton() {
   data_container.innerHTML =
-    for (var i = 0; i < accData.length(); i++) {
+    for(var i = 0; i < accData.length(); i++) {
       for(var j = 0; j < 3; j++){
         '<p>' + accData[i][j] + '</p>';
       }
