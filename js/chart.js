@@ -11,7 +11,7 @@ var accPeriod = 'e95dfb24-251d-470a-a062-fa1922dfa9a'
 var AccelerometerData = null;
 var AccelerometerPeriod = null;
 var accData = new Int16Array(3);
-var primaryServer;
+var gattServer;
 
 function onConnectClick() {
   navigator.bluetooth.requestDevice({
