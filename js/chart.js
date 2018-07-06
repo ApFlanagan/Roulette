@@ -3,6 +3,7 @@
 // });
 // google.charts.setOnLoadCallback(drawChart);
 var bluetoothDevice = null;
+myfile.jpg?ver=123
 var versionNumber = 1;
 var microbitUUID = 'e95d0000-251d-470a-a062-fa1922dfa9a8';
 var accServiceUUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8';
