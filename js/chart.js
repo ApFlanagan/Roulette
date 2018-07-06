@@ -3,7 +3,7 @@ google.charts.load('current', {
 });
 
 var bluetoothDevice = null;
-var versionNumber = '1.22.14';
+var versionNumber = '1.22.15';
 var microbitUUID = 'e95d0000-251d-470a-a062-fa1922dfa9a8';
 var accServiceUUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8';
 var accDataUUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
@@ -17,6 +17,7 @@ var accData = [
 var gattServer;
 var data_container = document.querySelector('.data-container');
 var reading = false;
+var AccelerometerGraph = document.getElementById('curve-chart');
 
 function onConnectClick() {
   navigator.bluetooth.requestDevice({
@@ -55,6 +56,7 @@ function onButtonClick() {
     var graphUpdate = setInterval(function() {
       google.charts.setOnLoadCallback(drawChart);
     }, 20);
+    AccelerometerGraph.toggleClass('hidden_graph');
     return (AccelerometerService ? Promise.resolve() : onConnectClick())
       .then(_ => {
         console.log('Found Data Characteristic');
@@ -185,9 +187,10 @@ function onLogButton() {
 }
 
 function onClearButton() {
-  accData=[
+  accData = [
     ['Time', 'X', 'Y', 'Z']
   ];
+  AccelerometerGraph.toggleClass('hidden_graph');
 }
 
 function drawChart() {

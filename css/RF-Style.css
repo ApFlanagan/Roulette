@@ -210,6 +210,8 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
+.hidden_graph{
+  display:none;
 }
 
 button {
