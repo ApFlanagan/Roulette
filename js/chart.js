@@ -3,7 +3,7 @@
 // });
 // google.charts.setOnLoadCallback(drawChart);
 var bluetoothDevice = null;
-var versionNumber = 1.10;
+var versionNumber = 1.11;
 var microbitUUID = 'e95d0000-251d-470a-a062-fa1922dfa9a8';
 var accServiceUUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8';
 var accDataUUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
@@ -22,15 +22,12 @@ function onConnectClick() {
       optionalServices: [accServiceUUID]
     })
     .then(device => {
-      // Human-readable name of the device.
       console.log(device.name);
       bluetoothDevice = device;
       bluetoothDevice.addEventListener('gattserverdisconnected', onDisconnected);
-      // Attempts to connect to remote GATT Server.
       return bluetoothDevice.gatt.connect();
     })
     .then(server => {
-      // Getting Accelerometer Service...
       console.log('Found GATT Server');
       gattServer = server;
       console.log(gattServer);
@@ -40,34 +37,8 @@ function onConnectClick() {
       AccelerometerService = service;
       document.getElementById('connectButton').innerHTML = "Connected";
       document.getElementById('disconnectButton').innerHTML = "Disconnect";
-      // Getting Accelerometer Characteristic
     })
-  // .then(connectDevice);
 }
-
-//
-// function connectDevice() {
-//   if (bluetoothDevice.gatt.connected && AccelerometerCharacteristic) {
-//     return Promise.resolve();
-//   }
-//   document.getElementById('connectButton').innerHTML = "Connecting...";
-//   .then(server => {
-//       // Getting Accelerometer Service...
-//       primaryServer = server;
-//       return server.getPrimaryService(accCharUUID);
-//     })
-//     .then(service => {
-//       console.log('Accelerometer Data Characteristic:');
-//       // Getting Accelerometer Characteristic
-//       return service.getCharacteristic(accUUID);
-//     })
-//     .then(characteristic => {
-//       AccelerometerCharacteristic = characteristic;
-//       console.log('>>' + AccelerometerCharacteristic.uuid);
-//       document.getElementById('connectButton').innerHTML = "Connected";
-//       document.getElementById('disconnectButton').innerHTML = "Disconnect";
-//     });
-// }
 
 function onButtonClick() {
   return (AccelerometerService ? Promise.resolve() : onConnectClick())
@@ -157,17 +128,17 @@ function onDisconnected(event) {
 }
 
 function handleValueChange(event) {
-  AcceleratorX = event.target.value.getInt16(0) / 1000.0;
+  AcceleratorX = event.target.value.getInt16(0);
   console.log('x: ' + AcceleratorX);
 
-  AcceleratorY = event.target.value.getInt16(2) / 1000.0;
+  AcceleratorY = event.target.value.getInt16(2);
   console.log('y: ' + AcceleratorY);
 
-  AcceleratorZ = event.target.value.getInt16(4) / 1000.0;
+  AcceleratorZ = event.target.value.getInt16(4);
   console.log('z: ' + AcceleratorZ);
-  var accItem = new Int16Array();
-  accItem = [AcceleratorX, AcceleratorY, AcceleratorZ];
-  accData.push(accItem);
+  // var accItem = new Int16Array();
+  // accItem = [AcceleratorX, AcceleratorY, AcceleratorZ];
+  // accData.push(accItem);
 }
 
 // function drawChart() {
