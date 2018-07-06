@@ -214,7 +214,7 @@ body {
   display:none;
 }
 
-button {
+/* button {
   float: right;
   margin: 10px;
   display: block;
@@ -227,4 +227,4 @@ button:hover :focus :active {
   background-color: none;
   border-bottom: 1px solid black;
   border-left: 1px solid black;
-}
+} */
