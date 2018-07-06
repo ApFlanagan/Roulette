@@ -3,7 +3,7 @@
 // });
 // google.charts.setOnLoadCallback(drawChart);
 var bluetoothDevice = null;
-var microbitUUID = 'e95d0000-251d-470a-a062-fa1922dfa9a8'
+var microbitUUID = 'e95d0000-251d-470a-a062-fa1922dfa9a8';
 var accUUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8';
 var accCharUUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
 var accPeriod = 'e95dfb24-251d-470a-a062-fa1922dfa9a'
@@ -14,9 +14,9 @@ var primaryServer;
 function onConnectClick() {
   navigator.bluetooth.requestDevice({
       filters: [{
-        services: [accUUID]
-      }]
-    })
+        services: ['generic_access']
+      }],
+      optionalServices: [accCharUUID, 'battery_service', 'human_interface_device']})
     .then(device => {
       // Human-readable name of the device.
       console.log(device.name);
@@ -37,12 +37,12 @@ function connectDevice() {
     .then(server => {
       // Getting Accelerometer Service...
       primaryServer = server;
-      return server.getPrimaryService(accUUID);
+      return server.getPrimaryService('human_interface_device');
     })
     .then(service => {
       console.log('Accelerometer Data Characteristic:');
       // Getting Accelerometer Characteristic
-      return service.getCharacteristic(accCharUUID);
+      return service.getCharacteristic('hid_information');
     })
     .then(characteristic => {
       AccelerometerCharacteristic = characteristic;
@@ -60,10 +60,11 @@ function onButtonClick() {
       return AccelerometerCharacteristic.readValue();
     })
     .then(value => {
-      accData[0] = value.getInt16(0, 1);
-      accData[1] = value.getInt16(1, 1);
-      accData[2] = value.getInt16(2, 1);
-      console.log(accData);
+      console.log(value);
+      // accData[0] = value.getInt16(0, 1);
+      // accData[1] = value.getInt16(1, 1);
+      // accData[2] = value.getInt16(2, 1);
+      // console.log(accData);
       document.getElementById('startButton').innerHTML = "Read";
     })
     .catch(error => {
@@ -91,7 +92,7 @@ function onPeriodButtonClick() {
 
 function onDisconnectButton() {
   if (!bluetoothDevice) {
-    console.log('No Device FOund');
+    console.log('No Device Found');
     return;
   }
   console.log('Disconnecting from Bluetooth Device...');
