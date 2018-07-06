@@ -4,8 +4,8 @@
 // google.charts.setOnLoadCallback(drawChart);
 var bluetoothDevice = null;
 var microbitUUID = 'e95d0000-251d-470a-a062-fa1922dfa9a8';
-var accUUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8';
-var accCharUUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
+var accServiceUUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8';
+var accDataUUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
 var accPeriod = 'e95dfb24-251d-470a-a062-fa1922dfa9a'
 var AccelerometerCharacteristic = null;
 var accData = new Int16Array(3);
@@ -16,7 +16,7 @@ function onConnectClick() {
       filters: [{
         namePrefix: 'BBC micro:bit',
       }],
-      optionalServices: [accCharUUID]
+      optionalServices: [accServiceUUID]
     })
     .then(device => {
       // Human-readable name of the device.
@@ -31,12 +31,12 @@ function onConnectClick() {
         // Getting Accelerometer Service...
         gattServer = server;
         console.log(gattServer);
-        return gattServer.getPrimaryService(accCharUUID);
+        return gattServer.getPrimaryService(accServiceUUID);
       })
       .then(service => {
         console.log('Accelerometer Data Characteristic:');
         // Getting Accelerometer Characteristic
-        return service.getCharacteristic(accUUID);
+        return service.getCharacteristic(accDataUUID);
       })
       .then(characteristic => {
         AccelerometerCharacteristic = characteristic;
