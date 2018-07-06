@@ -176,7 +176,7 @@ function onLogButton() {
         default:
           data_container.innerHTML = data_container.textContent + 'Error';
       }
-      data_container.innerHTML = data_container.textContent + accData[i][j];
+      data_container.innerHTML = data_container.textContent + accData[i][j] + ' ';
     }
     data_container.innerHTML = data_container.textContent + '</p>';
   }
