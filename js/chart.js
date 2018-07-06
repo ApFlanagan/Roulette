@@ -8,7 +8,8 @@ var microbitUUID = 'e95d0000-251d-470a-a062-fa1922dfa9a8';
 var accServiceUUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8';
 var accDataUUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
 var accPeriod = 'e95dfb24-251d-470a-a062-fa1922dfa9a'
-var AccelerometerCharacteristic = null;
+var AccelerometerData = null;
+var AccelerometerPeriod = null;
 var accData = new Int16Array(3);
 var primaryServer;
 
@@ -40,7 +41,8 @@ function onConnectClick() {
         return service.getCharacteristic(accDataUUID);
       })
       .then(characteristic => {
-        AccelerometerCharacteristic = characteristic;
+        AccelerometerData = characteristic;
+        AccelerometerData
         document.getElementById('connectButton').innerHTML = "Connected";
         document.getElementById('disconnectButton').innerHTML = "Disconnect";
       });
@@ -72,11 +74,11 @@ function onConnectClick() {
 // }
 
 function onButtonClick() {
-  return (AccelerometerCharacteristic ? Promise.resolve() : onConnectClick())
+  return (AccelerometerData ? Promise.resolve() : onConnectClick())
     .then(_ => {
       document.getElementById('startButton').innerHTML = "Reading...";
       console.log('Reading Accelerometer...');
-      return AccelerometerCharacteristic.readValue();
+      return AccelerometerData.readValue();
     })
     .then(value => {
       accData[0] = value.getInt16(0, 1);
@@ -91,14 +93,15 @@ function onButtonClick() {
 }
 
 function onPeriodButtonClick() {
-  return (primaryServer ? Promise.resolve() : onConnectClick())
+  return (gattServer ? Promise.resolve() : onConnectClick())
     .then(service => {
       console.log('Accelerometer Period Characteristic:');
       // Getting Accelerometer Characteristic
       return service.getCharacteristic(accPeriod);
     })
     .then(characteristic => {
-      return characteristic.readValue();
+      AccelerometerPeriod = characteristic;
+      return AccelerometerPeriod.readValue();
     })
     .then(value => {
       console.log('Accelerometer period is: ' + value.getUint8(0));
