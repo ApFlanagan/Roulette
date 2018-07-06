@@ -14,7 +14,7 @@ var primaryServer;
 function onConnectClick() {
   navigator.bluetooth.requestDevice({
       filters: [{
-        namePrefix: 'BBC Micro:bit',
+        namePrefix: 'BBC micro:bit',
       }],
       optionalServices: [accCharUUID]
     })
