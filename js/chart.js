@@ -3,7 +3,7 @@
 // });
 // google.charts.setOnLoadCallback(drawChart);
 var bluetoothDevice = null;
-var versionNumber = 1.9;
+var versionNumber = 1.10;
 var microbitUUID = 'e95d0000-251d-470a-a062-fa1922dfa9a8';
 var accServiceUUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8';
 var accDataUUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
@@ -122,6 +122,9 @@ function setPeriodTo1() {
   .then(characteristic => {
     AccelerometerPeriod = characteristic;
     return AccelerometerPeriod.writeValue(Uint16Array.of(1));
+  })
+  .then(_=> {
+    return AccelerometerPeriod.readValue();
   })
   .then(value => {
     console.log('New Accelerometer period is: ' + value.getUint8(0));
