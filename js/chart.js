@@ -3,7 +3,7 @@
 // });
 // google.charts.setOnLoadCallback(drawChart);
 var bluetoothDevice = null;
-var versionNumber = 1.14;
+var versionNumber = 1.15;
 var microbitUUID = 'e95d0000-251d-470a-a062-fa1922dfa9a8';
 var accServiceUUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8';
 var accDataUUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
@@ -129,13 +129,13 @@ function onDisconnected(event) {
 }
 
 function handleValueChange(event) {
-  AcceleratorX = event.target.value.getInt16(0);
+  AcceleratorX = event.target.value.getInt16(0, 1) / 1000.0;
   console.log('x: ' + AcceleratorX);
 
-  AcceleratorY = event.target.value.getInt16(2);
+  AcceleratorY = event.target.value.getInt16(2, 1) / 1000.0;
   console.log('y: ' + AcceleratorY);
 
-  AcceleratorZ = event.target.value.getInt16(4);
+  AcceleratorZ = event.target.value.getInt16(4, 1) / 1000.0;
   console.log('z: ' + AcceleratorZ);
 
   data_container.innerHTML =
