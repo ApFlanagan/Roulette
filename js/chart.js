@@ -3,7 +3,7 @@
 // });
 // google.charts.setOnLoadCallback(drawChart);
 var bluetoothDevice = null;
-var versionNumber = 1.12;
+var versionNumber = 1.13;
 var microbitUUID = 'e95d0000-251d-470a-a062-fa1922dfa9a8';
 var accServiceUUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8';
 var accDataUUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
@@ -13,7 +13,7 @@ var AccelerometerPeriod = null;
 var AccelerometerService = null;
 var accData = new Int16Array();
 var gattServer;
-var data - container = document.querySelector('.data-container');
+var data_container = document.querySelector('.data-container');
 
 function onConnectClick() {
   navigator.bluetooth.requestDevice({
@@ -138,7 +138,7 @@ function handleValueChange(event) {
   AcceleratorZ = event.target.value.getInt16(4);
   console.log('z: ' + AcceleratorZ);
 
-  data - container.innerHTML = {
+  data_container.innerHTML = {
     '<p> Acceleration X: '
     AcceleratorX '</p>'
     '<p> Acceleration Y: '
