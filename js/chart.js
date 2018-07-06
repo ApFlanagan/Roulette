@@ -3,7 +3,7 @@
 // });
 // google.charts.setOnLoadCallback(drawChart);
 var bluetoothDevice = null;
-var versionNumber = 1.13;
+var versionNumber = 1.14;
 var microbitUUID = 'e95d0000-251d-470a-a062-fa1922dfa9a8';
 var accServiceUUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8';
 var accDataUUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
@@ -138,14 +138,10 @@ function handleValueChange(event) {
   AcceleratorZ = event.target.value.getInt16(4);
   console.log('z: ' + AcceleratorZ);
 
-  data_container.innerHTML = {
-    '<p> Acceleration X: '
-    AcceleratorX '</p>'
-    '<p> Acceleration Y: '
-    AcceleratorY '</p>'
-    '<p> Acceleration Z: '
-    AcceleratorZ '</p>'
-  };
+  data_container.innerHTML =
+    '<p> Acceleration X: ' + AcceleratorX + '</p>' +
+    '<p> Acceleration Y: ' + AcceleratorY + '</p>' +
+    '<p> Acceleration Z: ' + AcceleratorZ + '</p>';
 
   // var accItem = new Int16Array();
   // accItem = [AcceleratorX, AcceleratorY, AcceleratorZ];
