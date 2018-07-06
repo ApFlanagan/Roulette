@@ -3,7 +3,7 @@
 // });
 // google.charts.setOnLoadCallback(drawChart);
 var bluetoothDevice = null;
-var versionNumber = '1.20.11';
+var versionNumber = '1.21.1';
 var microbitUUID = 'e95d0000-251d-470a-a062-fa1922dfa9a8';
 var accServiceUUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8';
 var accDataUUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
@@ -49,6 +49,8 @@ function onButtonClick() {
     document.getElementById('startButton').innerHTML = "Read";
   } else {
     reading = true;
+    var start = Date.now();
+    console.log("Timer Started");
     return (AccelerometerService ? Promise.resolve() : onConnectClick())
       .then(_ => {
         console.log('Found Data Characteristic');
@@ -137,6 +139,9 @@ function onDisconnected(event) {
 }
 
 function handleValueChange(event) {
+  var millis = Date.now() - start;
+  console.log("seconds elapsed = " + Math.floor(millis/1000));
+
   AcceleratorX = event.target.value.getInt16(0, 1);
   console.log('x: ' + AcceleratorX);
 
@@ -157,9 +162,9 @@ function handleValueChange(event) {
 
 function onLogButton() {
   data_container.innerHTML = "";
-  for (var i = 0; i < accData.length; i++) {
+  for (let i = 0; i < accData.length; i++) {
     data_container.innerHTML = data_container.innerHTML + '<p>';
-    for (var j = 0; j < 3; j++) {
+    for (let j = 0; j < 3; j++) {
       switch (j) {
         case 0:
           data_container.innerHTML = data_container.innerHTML + 'x: ';
