@@ -2,7 +2,7 @@ google.charts.load('current', {
   'packages': ['corechart']
 });
 var bluetoothDevice = null;
-var versionNumber = '1.22.5';
+var versionNumber = '1.22.6';
 var microbitUUID = 'e95d0000-251d-470a-a062-fa1922dfa9a8';
 var accServiceUUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8';
 var accDataUUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
@@ -10,7 +10,7 @@ var accPeriod = 'e95dfb24-251d-470a-a062-fa1922dfa9a8'
 var AccelerometerData = null;
 var AccelerometerPeriod = null;
 var AccelerometerService = null;
-var accData = new Array();
+var accData = ['Time','X','Y','Z'];
 var gattServer;
 var data_container = document.querySelector('.data-container');
 var reading = false;
@@ -136,7 +136,7 @@ function onDisconnected(event) {
 }
 
 function handleValueChange(event) {
-  var timeStamp = Date.now();
+  var timeStamp = new Date(Year, Month, Day, Hours, Minutes, Seconds, Milliseconds)
   console.log(timeStamp);
 
   AcceleratorX = event.target.value.getInt16(0, 1);
@@ -148,7 +148,7 @@ function handleValueChange(event) {
   AcceleratorZ = event.target.value.getInt16(4, 1);
   console.log('z: ' + AcceleratorZ);
 
-  var accItem = [timeStamp, AcceleratorX, AcceleratorY, AcceleratorZ];
+  var accItem = [timeStamp,AcceleratorX, AcceleratorY, AcceleratorZ];
   accData.push(accItem);
 
   data_container.innerHTML =
