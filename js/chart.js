@@ -15,7 +15,8 @@ function onConnectClick() {
   navigator.bluetooth.requestDevice({
       filters: [{
         namePrefix: 'BBC Micro:bit',
-      }]
+      }],
+      optionalServices: [accCharUUID]
     })
     .then(device => {
       // Human-readable name of the device.
@@ -23,34 +24,52 @@ function onConnectClick() {
       bluetoothDevice = device;
       bluetoothDevice.addEventListener('gattserverdisconnected', onDisconnected);
       // Attempts to connect to remote GATT Server.
+
+      return bluetoothDevice.gatt.connect();
     })
-    .then(connectDevice);
-}
-
-
-function connectDevice() {
-  if (bluetoothDevice.gatt.connected && AccelerometerCharacteristic) {
-    return Promise.resolve();
-  }
-  document.getElementById('connectButton').innerHTML = "Connecting...";
-  return bluetoothDevice.gatt.connect()
     .then(server => {
-      // Getting Accelerometer Service...
-      primaryServer = server;
-      return server.getPrimaryService(accCharUUID);
-    })
-    .then(service => {
-      console.log('Accelerometer Data Characteristic:');
-      // Getting Accelerometer Characteristic
-      return service.getCharacteristic(accUUID);
-    })
-    .then(characteristic => {
-      AccelerometerCharacteristic = characteristic;
-      console.log('>>' + AccelerometerCharacteristic.uuid);
-      document.getElementById('connectButton').innerHTML = "Connected";
-      document.getElementById('disconnectButton').innerHTML = "Disconnect";
-    });
+        // Getting Accelerometer Service...
+        gattServer = server;
+        console.log(gattServer);
+        return gattServer.getPrimaryService(accCharUUID);
+      })
+      .then(service => {
+        console.log('Accelerometer Data Characteristic:');
+        // Getting Accelerometer Characteristic
+        return service.getCharacteristic(accUUID);
+      })
+      .then(characteristic => {
+        AccelerometerCharacteristic = characteristic;
+        AccelerometerCharacteristic.startNotifications();
+        document.getElementById('connectButton').innerHTML = "Connected";
+        document.getElementById('disconnectButton').innerHTML = "Disconnect";
+      });
+    // .then(connectDevice);
 }
+
+//
+// function connectDevice() {
+//   if (bluetoothDevice.gatt.connected && AccelerometerCharacteristic) {
+//     return Promise.resolve();
+//   }
+//   document.getElementById('connectButton').innerHTML = "Connecting...";
+//   .then(server => {
+//       // Getting Accelerometer Service...
+//       primaryServer = server;
+//       return server.getPrimaryService(accCharUUID);
+//     })
+//     .then(service => {
+//       console.log('Accelerometer Data Characteristic:');
+//       // Getting Accelerometer Characteristic
+//       return service.getCharacteristic(accUUID);
+//     })
+//     .then(characteristic => {
+//       AccelerometerCharacteristic = characteristic;
+//       console.log('>>' + AccelerometerCharacteristic.uuid);
+//       document.getElementById('connectButton').innerHTML = "Connected";
+//       document.getElementById('disconnectButton').innerHTML = "Disconnect";
+//     });
+// }
 
 function onButtonClick() {
   return (AccelerometerCharacteristic ? Promise.resolve() : onConnectClick())
