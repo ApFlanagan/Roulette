@@ -2,7 +2,7 @@ google.charts.load('current', {
   'packages': ['corechart']
 });
 var bluetoothDevice = null;
-var versionNumber = '1.22.8';
+var versionNumber = '1.22.9';
 var microbitUUID = 'e95d0000-251d-470a-a062-fa1922dfa9a8';
 var accServiceUUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8';
 var accDataUUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
@@ -10,7 +10,7 @@ var accPeriod = 'e95dfb24-251d-470a-a062-fa1922dfa9a8'
 var AccelerometerData = null;
 var AccelerometerPeriod = null;
 var AccelerometerService = null;
-var accData = ['Time', 'X', 'Y', 'Z'];
+var accData = [['Time', 'X', 'Y', 'Z']];
 var gattServer;
 var data_container = document.querySelector('.data-container');
 var reading = false;
@@ -157,7 +157,7 @@ function handleValueChange(event) {
     '<p> Acceleration Y: ' + AcceleratorY + '</p>' +
     '<p> Acceleration Z: ' + AcceleratorZ + '</p>';
 
-  // google.charts.setOnLoadCallback(drawChart);
+  google.charts.setOnLoadCallback(drawChart);
 }
 
 function onLogButton() {
