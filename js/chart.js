@@ -26,23 +26,22 @@ function onConnectClick() {
       bluetoothDevice = device;
       bluetoothDevice.addEventListener('gattserverdisconnected', onDisconnected);
       // Attempts to connect to remote GATT Server.
-
       return bluetoothDevice.gatt.connect();
     })
     .then(server => {
         // Getting Accelerometer Service...
+        console.log('Found GATT Server');
         gattServer = server;
         console.log(gattServer);
         return gattServer.getPrimaryService(accServiceUUID);
       })
       .then(service => {
-        console.log('Accelerometer Data Characteristic:');
+        console.log('Found Data Characteristic');
         // Getting Accelerometer Characteristic
         return service.getCharacteristic(accDataUUID);
       })
       .then(characteristic => {
         AccelerometerCharacteristic = characteristic;
-        AccelerometerCharacteristic.startNotifications();
         document.getElementById('connectButton').innerHTML = "Connected";
         document.getElementById('disconnectButton').innerHTML = "Disconnect";
       });
@@ -81,11 +80,10 @@ function onButtonClick() {
       return AccelerometerCharacteristic.readValue();
     })
     .then(value => {
-      console.log(value);
-      // accData[0] = value.getInt16(0, 1);
-      // accData[1] = value.getInt16(1, 1);
-      // accData[2] = value.getInt16(2, 1);
-      // console.log(accData);
+      accData[0] = value.getInt16(0, 1);
+      accData[1] = value.getInt16(1, 1);
+      accData[2] = value.getInt16(2, 1);
+      console.log(accData);
       document.getElementById('startButton').innerHTML = "Read";
     })
     .catch(error => {
