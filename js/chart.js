@@ -3,7 +3,7 @@
 // });
 // google.charts.setOnLoadCallback(drawChart);
 var bluetoothDevice = null;
-var versionNumber = 1.4;
+var versionNumber = 1.5;
 var microbitUUID = 'e95d0000-251d-470a-a062-fa1922dfa9a8';
 var accServiceUUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8';
 var accDataUUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
@@ -42,8 +42,6 @@ function onConnectClick() {
       document.getElementById('disconnectButton').innerHTML = "Disconnect";
       // Getting Accelerometer Characteristic
     })
-    .then(characteristic => {
-    });
   // .then(connectDevice);
 }
 
@@ -73,12 +71,13 @@ function onConnectClick() {
 
 function onButtonClick() {
   return (AccelerometerService ? Promise.resolve() : onConnectClick())
-    .then(_=> {
+    .then(_ => {
       console.log('Found Data Characteristic');
       return AccelerometerService.getCharacteristic(accDataUUID);
     })
     .then(characteristic => {
       AccelerometerData = characteristic;
+      AccelerometerData.addEventListener('characteristicvaluechanged', handleValueChange);
       document.getElementById('startButton').innerHTML = "Reading...";
       console.log('Reading Accelerometer...');
       return AccelerometerData.readValue();
@@ -87,7 +86,7 @@ function onButtonClick() {
       accData[0] = value.getInt16(0, 1);
       accData[1] = value.getInt16(2, 1);
       accData[2] = value.getInt16(4, 1);
-      console.log(accData);
+      // console.log(accData);
       document.getElementById('startButton').innerHTML = "Read";
     })
     .catch(error => {
@@ -132,6 +131,17 @@ function onDisconnected(event) {
   document.getElementById('disconnectButton').innerHTML = "Disconnected";
   document.getElementById('connectButton').innerHTML = "Connect";
 
+}
+
+handleValueChange(event) {
+  AcceleratorX = event.target.value.getUint16(0) / 1000.0;
+  console.log('x' + AcceleratorX);
+
+  AcceleratorY = event.target.value.getUint16(2) / 1000.0;
+  console.log('y' + AcceleratorY);
+
+  AcceleratorZ = event.target.value.getUint16(4) / 1000.0;
+  console.log('z' + AcceleratorZ);
 }
 
 // function drawChart() {
