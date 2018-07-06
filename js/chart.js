@@ -3,7 +3,7 @@
 // });
 // google.charts.setOnLoadCallback(drawChart);
 var bluetoothDevice = null;
-var versionNumber = 1.18;
+var versionNumber = 1.19;
 var microbitUUID = 'e95d0000-251d-470a-a062-fa1922dfa9a8';
 var accServiceUUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8';
 var accDataUUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
@@ -14,6 +14,7 @@ var AccelerometerService = null;
 var accData = new Array();
 var gattServer;
 var data_container = document.querySelector('.data-container');
+var reading = false;
 
 function onConnectClick() {
   navigator.bluetooth.requestDevice({
@@ -42,29 +43,36 @@ function onConnectClick() {
 }
 
 function onButtonClick() {
-  return (AccelerometerService ? Promise.resolve() : onConnectClick())
-    .then(_ => {
-      console.log('Found Data Characteristic');
-      return AccelerometerService.getCharacteristic(accDataUUID);
-    })
-    .then(characteristic => {
-      AccelerometerData = characteristic;
-      AccelerometerData.startNotifications();
-      AccelerometerData.addEventListener('characteristicvaluechanged', handleValueChange);
-      document.getElementById('startButton').innerHTML = "Reading...";
-      console.log('Reading Accelerometer...');
-      // return AccelerometerData.readValue();
-    })
-    // .then(value => {
-    //   accData[0] = value.getInt16(0, 1);
-    //   accData[1] = value.getInt16(2, 1);
-    //   accData[2] = value.getInt16(4, 1);
-    //   // console.log(accData);
-    //   document.getElementById('startButton').innerHTML = "Read";
-    // })
-    .catch(error => {
-      console.log('Argh! ' + error);
-    });
+  if (reading) {
+    AccelerometerData.stopNotifications();
+    reading = false;
+    document.getElementById('startButton').innerHTML = "Read";
+  } else {
+    reading = true;
+    return (AccelerometerService ? Promise.resolve() : onConnectClick())
+      .then(_ => {
+        console.log('Found Data Characteristic');
+        return AccelerometerService.getCharacteristic(accDataUUID);
+      })
+      .then(characteristic => {
+        AccelerometerData = characteristic;
+        AccelerometerData.startNotifications();
+        AccelerometerData.addEventListener('characteristicvaluechanged', handleValueChange);
+        document.getElementById('startButton').innerHTML = "Stop Reading...";
+        console.log('Reading Accelerometer...');
+        // return AccelerometerData.readValue();
+      })
+      // .then(value => {
+      //   accData[0] = value.getInt16(0, 1);
+      //   accData[1] = value.getInt16(2, 1);
+      //   accData[2] = value.getInt16(4, 1);
+      //   // console.log(accData);
+      //   document.getElementById('startButton').innerHTML = "Read";
+      // })
+      .catch(error => {
+        console.log('Argh! ' + error);
+      });
+  }
 }
 
 function onPeriodButtonClick() {
@@ -151,10 +159,13 @@ function handleValueChange(event) {
 }
 
 function onLogButton() {
-  data_container.innerHTML =
-    '<p>' + accData[0][0] + '</p>' +
-    '<p>' + accData[0][1] + '</p>' +
-    '<p>' + accData[0][2] + '</p>';
+  data_container.innerHTML = "";
+  data_container.write(
+    for (var i = 0; i < accData.length(); i++) {
+      for (var j = 0; j < 3; j++) {
+        '<p>' + accData[i][j] + '</p>';
+      }
+    });
 }
 
 // function drawChart() {
