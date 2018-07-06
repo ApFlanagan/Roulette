@@ -138,7 +138,7 @@ function onDisconnected(event) {
 
 function handleValueChange(event) {
   var now = Date.now();
-  var timeStamp = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
+  var timeStamp = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + ':' + now.getMilliseconds();
 
   console.log(timeStamp);
 
