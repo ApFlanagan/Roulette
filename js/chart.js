@@ -3,7 +3,7 @@
 // });
 // google.charts.setOnLoadCallback(drawChart);
 var bluetoothDevice = null;
-var versionNumber = 1.6;
+var versionNumber = 1.7;
 var microbitUUID = 'e95d0000-251d-470a-a062-fa1922dfa9a8';
 var accServiceUUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8';
 var accDataUUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
@@ -77,18 +77,19 @@ function onButtonClick() {
     })
     .then(characteristic => {
       AccelerometerData = characteristic;
+      AccelerometerData.startNotifications();
       AccelerometerData.addEventListener('characteristicvaluechanged', handleValueChange);
       document.getElementById('startButton').innerHTML = "Reading...";
       console.log('Reading Accelerometer...');
-      return AccelerometerData.readValue();
+      // return AccelerometerData.readValue();
     })
-    .then(value => {
-      accData[0] = value.getInt16(0, 1);
-      accData[1] = value.getInt16(2, 1);
-      accData[2] = value.getInt16(4, 1);
-      // console.log(accData);
-      document.getElementById('startButton').innerHTML = "Read";
-    })
+    // .then(value => {
+    //   accData[0] = value.getInt16(0, 1);
+    //   accData[1] = value.getInt16(2, 1);
+    //   accData[2] = value.getInt16(4, 1);
+    //   // console.log(accData);
+    //   document.getElementById('startButton').innerHTML = "Read";
+    // })
     .catch(error => {
       console.log('Argh! ' + error);
     });
@@ -135,13 +136,13 @@ function onDisconnected(event) {
 
 function handleValueChange(event) {
   AcceleratorX = event.target.value.getUint16(0) / 1000.0;
-  console.log('x' + AcceleratorX);
+  console.log('x: ' + AcceleratorX);
 
   AcceleratorY = event.target.value.getUint16(2) / 1000.0;
-  console.log('y' + AcceleratorY);
+  console.log('y: ' + AcceleratorY);
 
   AcceleratorZ = event.target.value.getUint16(4) / 1000.0;
-  console.log('z' + AcceleratorZ);
+  console.log('z: ' + AcceleratorZ);
 }
 
 // function drawChart() {
