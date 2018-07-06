@@ -3,7 +3,7 @@ google.charts.load('current', {
 });
 
 var bluetoothDevice = null;
-var versionNumber = '1.22.18';
+var versionNumber = '1.22.19';
 var microbitUUID = 'e95d0000-251d-470a-a062-fa1922dfa9a8';
 var accServiceUUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8';
 var accDataUUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
@@ -56,6 +56,7 @@ function onButtonClick() {
     reading = true;
     var graphUpdate = setInterval(function() {
       google.charts.setOnLoadCallback(drawChart);
+      AccelerometerGraph.removeAttribute('hidden');
     }, 20);
     AccelerometerGraph.removeAttribute('hidden');
     return (AccelerometerService ? Promise.resolve() : onConnectClick())
