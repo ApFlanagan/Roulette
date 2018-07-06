@@ -214,6 +214,15 @@ body {
   display:none;
 }
 
+button{
+  float:initial;
+  margin:initial;
+  display: initial;
+  background-position: initial;
+  color: initial;
+  border: initial;  
+}
+
 /* button {
   float: right;
   margin: 10px;
