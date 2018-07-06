@@ -3,7 +3,7 @@
 // });
 // google.charts.setOnLoadCallback(drawChart);
 var bluetoothDevice = null;
-var versionNumber = '1.20.6';
+var versionNumber = '1.20.7';
 var microbitUUID = 'e95d0000-251d-470a-a062-fa1922dfa9a8';
 var accServiceUUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8';
 var accDataUUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
@@ -161,24 +161,24 @@ function handleValueChange(event) {
 function onLogButton() {
   data_container.innerHTML = "";
   for (var i = 0; i < accData.length; i++) {
-    data_container.innerHTML = data_container.textContent + '<p>';
+    data_container.innerHTML = data_container.innerHTML + '<p>';
     for (var j = 0; j < 3; j++) {
       switch (j) {
         case 0:
-          data_container.innerHTML = data_container.textContent + 'x:';
+          data_container.innerHTML = data_container.textContent + 'x: ';
           break;
         case 1:
-          data_container.innerHTML = data_container.textContent + 'y:';
+          data_container.innerHTML = data_container.textContent + 'y: ';
           break;
         case 2:
-          data_container.innerHTML = data_container.textContent + 'z:';
+          data_container.innerHTML = data_container.textContent + 'z: ';
           break;
         default:
           data_container.innerHTML = data_container.textContent + 'Error';
       }
       data_container.innerHTML = data_container.textContent + accData[i][j] + ' ';
     }
-    data_container.innerHTML = data_container.textContent + '</p>';
+    data_container.innerHTML = data_container.innerHTML + '</p>';
   }
 }
 
