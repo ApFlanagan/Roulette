@@ -2,7 +2,7 @@ google.charts.load('current', {
   'packages': ['corechart']
 });
 var bluetoothDevice = null;
-var versionNumber = '1.22.7';
+var versionNumber = '1.22.8';
 var microbitUUID = 'e95d0000-251d-470a-a062-fa1922dfa9a8';
 var accServiceUUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8';
 var accDataUUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
@@ -10,7 +10,7 @@ var accPeriod = 'e95dfb24-251d-470a-a062-fa1922dfa9a8'
 var AccelerometerData = null;
 var AccelerometerPeriod = null;
 var AccelerometerService = null;
-var accData = ['Time','X','Y','Z'];
+var accData = ['Time', 'X', 'Y', 'Z'];
 var gattServer;
 var data_container = document.querySelector('.data-container');
 var reading = false;
@@ -149,7 +149,7 @@ function handleValueChange(event) {
   AcceleratorZ = event.target.value.getInt16(4, 1);
   console.log('z: ' + AcceleratorZ);
 
-  var accItem = [timeStamp,AcceleratorX, AcceleratorY, AcceleratorZ];
+  var accItem = [timeStamp, AcceleratorX, AcceleratorY, AcceleratorZ];
   accData.push(accItem);
 
   data_container.innerHTML =
@@ -157,31 +157,32 @@ function handleValueChange(event) {
     '<p> Acceleration Y: ' + AcceleratorY + '</p>' +
     '<p> Acceleration Z: ' + AcceleratorZ + '</p>';
 
-  google.charts.setOnLoadCallback(drawChart);
+  // google.charts.setOnLoadCallback(drawChart);
 }
 
 function onLogButton() {
-  data_container.innerHTML = "";
-  for (let i = 0; i < accData.length; i++) {
-    data_container.innerHTML = data_container.innerHTML + '<p>';
-    for (let j = 1; j < 4; j++) {
-      switch (j) {
-        case 1:
-          data_container.innerHTML = data_container.innerHTML + 'x: ';
-          break;
-        case 2:
-          data_container.innerHTML = data_container.innerHTML + 'y: ';
-          break;
-        case 3:
-          data_container.innerHTML = data_container.innerHTML + 'z: ';
-          break;
-        default:
-          data_container.innerHTML = data_container.innerHTML + 'Error';
-      }
-      data_container.innerHTML = data_container.innerHTML + accData[i][j] + ' ';
-    }
-    data_container.innerHTML = data_container.innerHTML + '</p>';
-  }
+  console.log(accData);
+  // data_container.innerHTML = "";
+  // for (let i = 0; i < accData.length; i++) {
+  //   data_container.innerHTML = data_container.innerHTML + '<p>';
+  //   for (let j = 1; j < 4; j++) {
+  //     switch (j) {
+  //       case 1:
+  //         data_container.innerHTML = data_container.innerHTML + 'x: ';
+  //         break;
+  //       case 2:
+  //         data_container.innerHTML = data_container.innerHTML + 'y: ';
+  //         break;
+  //       case 3:
+  //         data_container.innerHTML = data_container.innerHTML + 'z: ';
+  //         break;
+  //       default:
+  //         data_container.innerHTML = data_container.innerHTML + 'Error';
+  //     }
+  //     data_container.innerHTML = data_container.innerHTML + accData[i][j] + ' ';
+  //   }
+  //   data_container.innerHTML = data_container.innerHTML + '</p>';
+  // }
 }
 
 function drawChart() {
