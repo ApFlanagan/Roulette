@@ -1,6 +1,17 @@
 {
   "name": "Roulette Fitness",
-  "short_name": "RF",
+  "short_name": "Roulette",
+  "icons": [{
+      "src": "../Roulette/images/icons-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "../Roulette/images/icons-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
   "start_url": "../Roulette/index.html",
   "display": "standalone",
   "background_color": "#3E4EB8",
