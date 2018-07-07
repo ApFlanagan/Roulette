@@ -3,7 +3,7 @@ google.charts.load('current', {
 });
 
 var bluetoothDevice = null;
-var versionNumber = '1.23.9' ;
+var versionNumber = '1.23.10' ;
 var microbitUUID = 'e95d0000-251d-470a-a062-fa1922dfa9a8';
 var accServiceUUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8';
 var accDataUUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
@@ -28,7 +28,9 @@ if ('serviceWorker' in navigator) {
       console.log('Service Worker Registered');
     });
 }
-
+if(!'bluetooth' in navigator){
+  alert('Please enable Web Bluetooth by going to chrome://flags/#enable-web-bluetooth');
+}
 function onConnectClick() {
   navigator.bluetooth.requestDevice({
       filters: [{

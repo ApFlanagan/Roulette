@@ -1,5 +1,5 @@
 var dataCacheName = 'roulette-data-v1';
-var cacheName = 'roulette-pwa-4';
+var cacheName = 'roulette-pwa-5';
 var filesToCache = [
   '../Roulette/',
   '../Roulette/index.html',
