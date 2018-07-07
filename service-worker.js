@@ -1,10 +1,10 @@
 var dataCacheName = 'roulette-data-v1';
-var cacheName = 'roulette-pwa-1';
+var cacheName = 'roulette-pwa-2';
 var filesToCache = [
-  '/',
-  '/index.html',
-  '/js/chart.js',
-  '/css/RF-Style.css'
+  '../Roulette/',
+  '../Roulette/index.html',
+  '../Roulette/js/chart.js',
+  '../Roulette/css/RF-Style.css'
 ];
 
 self.addEventListener('install', function(e) {
