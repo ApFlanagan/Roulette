@@ -11,3 +11,6 @@ Update Log:
 
 1.22
   Dynamic chart
+
+1.23
+  Progressive Web App
