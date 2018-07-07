@@ -215,12 +215,13 @@ body {
 }
 
 button{
+  font-size: 16px;
   float:initial;
   margin:initial;
   display: initial;
   background-position: initial;
   color: initial;
-  border: initial;  
+  border: initial;
 }
 
 /* button {
