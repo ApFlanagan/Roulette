@@ -1,5 +1,5 @@
 var dataCacheName = 'roulette-data-v1';
-var cacheName = 'roulette-pwa-3';
+var cacheName = 'roulette-pwa-4';
 var filesToCache = [
   '../Roulette/',
   '../Roulette/index.html',
@@ -63,4 +63,4 @@ self.addEventListener('fetch', function(e) {
     })
   );
 }
-});
+);
