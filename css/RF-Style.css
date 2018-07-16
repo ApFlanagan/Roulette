@@ -46,10 +46,6 @@ body {
   background: #ececec;
 }
 
-.connect {
-  margin-bottom: 20px;
-}
-
 .header {
   width: 100%;
   height: 56px;
@@ -122,82 +118,6 @@ body {
   flex: 1;
 }
 
-.loader {
-  left: 150px;
-  top: 125px;
-  position: fixed;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
-
-.loader #spinner {
-  box-sizing: border-box;
-  stroke: #673AB7;
-  stroke-width: 3px;
-  -webkit-transform-origin: 50%;
-  transform-origin: 50%;
-  -webkit-animation: line 3.6s cubic-bezier(0.4, 0, 0.2, 1) infinite, rotate 3.6s linear infinite;
-  animation: line 3.6s cubic-bezier(0.4, 0, 0.2, 1) infinite, rotate 3.6s linear infinite;
-}
-
-@-webkit-keyframes rotate {
-  from {
-    -webkit-transform: rotate(0);
-    transform: rotate(0);
-  }
-  to {
-    -webkit-transform: rotate(450deg);
-    transform: rotate(450deg);
-  }
-}
-
-@keyframes rotate {
-  from {
-    -webkit-transform: rotate(0);
-    transform: rotate(0);
-  }
-  to {
-    -webkit-transform: rotate(450deg);
-    transform: rotate(450deg);
-  }
-}
-
-@-webkit-keyframes line {
-  0% {
-    stroke-dasharray: 2, 85.964;
-    -webkit-transform: rotate(0);
-    transform: rotate(0);
-  }
-  50% {
-    stroke-dasharray: 65.973, 21.9911;
-    stroke-dashoffset: 0;
-  }
-  100% {
-    stroke-dasharray: 2, 85.964;
-    stroke-dashoffset: -65.973;
-    -webkit-transform: rotate(90deg);
-    transform: rotate(90deg);
-  }
-}
-
-@keyframes line {
-  0% {
-    stroke-dasharray: 2, 85.964;
-    -webkit-transform: rotate(0);
-    transform: rotate(0);
-  }
-  50% {
-    stroke-dasharray: 65.973, 21.9911;
-    stroke-dashoffset: 0;
-  }
-  100% {
-    stroke-dasharray: 2, 85.964;
-    stroke-dashoffset: -65.973;
-    -webkit-transform: rotate(90deg);
-    transform: rotate(90deg);
-  }
-}
-
 #page {
   padding-top: 60px;
   padding-left: 60px;
@@ -213,15 +133,30 @@ body {
 .hidden_graph{
   display:none;
 }
-
+.container{
+  width:90%;
+  margin: 0px auto;
+}
 button{
-  font-size: 16px;
-  float:initial;
-  margin:initial;
-  display: initial;
-  background-position: initial;
-  color: initial;
-  border: initial;
+  font-size: 24px;
+  margin-bottom: 20px;
+  width:150px;
+  height:36px;
+  color:white;
+  text-shadow: 2px 2px 2px rgba(0,0,0,0.6);
+  box-shadow: 2px 2px 2px rgba(0,10,255,0.6);
+  float:left;
+  clear:left;
+  background-color:#3F51B5;
+  border: none;
+  border-radius: 2px;
+}
+button:hover{
+  transform: translate(0px, -2px);
+  box-shadow: 2px 2px 4px rgba(0,10,255,0.6);
+}
+button:active{
+  transform: translate(0px, 2px);
 }
 
 /* button {

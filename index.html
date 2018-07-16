@@ -14,6 +14,15 @@
   <link rel='apple-touch-startup-image' href='../Roulette/images/icons-512.png' />
   <meta name="msapplication-TileImage" content="./Roulette/images/icons-192.png">
   <meta name="msapplication-TileColor" content="#2F3BA2">
+  <script>
+  let deferredPrompt;
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installButton.style.display = 'block';
+  });
+  </script>
 </head>
 
 <body>
@@ -24,15 +33,12 @@
     <div class="container">
       <h3>Accelerometer Data</h3>
       <div>
-        <div>
-          <button onclick="onConnectClick()" id="connectButton" class="connect">Connect</button>
-          <button onclick="onDisconnectButton()" id="disconnectButton">Disconnect</button>
-          <button id="installButton" style="display:none">Add To Homepage</button>
-        </div>
+        <button onclick="onConnectClick()" id="connectButton" class="connect">Connect</button>
+        <button onclick="onDisconnectButton()" id="disconnectButton">Disconnect</button>
         <button onclick="onButtonClick()" id="startButton">Read</button>
-        <button onclick="onPeriodButtonClick()" id="periodButton">Period</button>
-        <button onclick="onLogButton()" id="logButton">Log</button>
-        <hr />
+        <button id="installButton">Add to Home Screen</button>
+        <!-- <button onclick="onPeriodButtonClick()" id="periodButton">Period</button>
+        <button onclick="onLogButton()" id="logButton">Log</button> -->
         <div class='data-container'>
         </div>
         <div id="curve_chart" style="height:300px, width:200px"></div>
