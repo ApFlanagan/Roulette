@@ -139,10 +139,6 @@ body {
 }
 button{
   font-size: 24px;
-  color:initial;
-  background: initial;
-  border: initial;
-  border-radius: 2px;
 }
 button:hover{
   transform: translate(0px, -2px);
