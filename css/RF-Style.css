@@ -140,8 +140,8 @@ body {
 button{
   font-size: 24px;
   color:initial;
-  background-color: initial;
-  border: none;
+  background: initial;
+  border: initial;
   border-radius: 2px;
 }
 button:hover{
