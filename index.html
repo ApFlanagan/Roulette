@@ -15,10 +15,12 @@
   <meta name="msapplication-TileImage" content="./Roulette/images/icons-192.png">
   <meta name="msapplication-TileColor" content="#2F3BA2">
   <script>
+    var installButton = document.getElementById('installButton');
     var deferredPrompt;
 
     window.addEventListener('beforeinstallprompt', (e) => {
-      console.log(Chrome Prompt for PWA);
+      console.log(Chrome Prompt
+        for PWA);
       e.preventDefault();
       deferredPrompt = e;
       installButton.style.display = 'block';
