@@ -3,7 +3,7 @@ google.charts.load('current', {
 });
 
 var bluetoothDevice = null;
-var versionNumber = '1.23.22';
+var versionNumber = '1.23.23';
 var microbitUUID = 'e95d0000-251d-470a-a062-fa1922dfa9a8';
 var accServiceUUID = 'e95d0753-251d-470a-a062-fa1922dfa9a8';
 var accDataUUID = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'
@@ -23,19 +23,6 @@ var installButton = document.getElementById('installButton');
 
 
 
-installButton.addEventListener('click', (e) => {
-  installButton.style.display = 'none';
-  deferredPrompt.prompt();
-  deferredPrompt.userChoice
-    .then((choiceResult) => {
-      if (choiceResult.outcome === 'accepted') {
-        console.log('User accepted the A2HS prompt');
-      } else {
-        console.log('User dismissed the A2HS prompt');
-      }
-      deferredPrompt = null;
-    });
-});
 
 AccelerometerGraph.setAttribute('hidden', true);
 
