@@ -218,6 +218,7 @@ function onLogButton() {
   localStorage.setItem("Excercise", JSON.stringify(accData));
   var myString = localStorage.getItem("Excercise");
   console.log(myString);
+  SaveDatFileBro(localStorage);
   // chrome.downloads.showDefaultFolder()
   // chrome.downloads.download({
   //   url: "data:text/plain," + myString,
