@@ -206,7 +206,7 @@ function handleValueChange(event) {
   var accItem = [timeStamp, AcceleratorX, AcceleratorY, AcceleratorZ];
   accData.push(accItem);
   logData[logData.length] = timeStamp;
-  logData[logData.length] = AccelratorX;
+  logData[logData.length] = AcceleratorX;
   logData[logData.length] = AcceleratorY;
   logData[logData.length] = AcceleratorZ;
 
@@ -219,8 +219,8 @@ function handleValueChange(event) {
 }
 
 function onLogButton() {
-
-  console.log(logData);
+  var logString = JSON.stringify(logData);
+  console.log(logString);
   // chrome.downloads.showDefaultFolder()
   // chrome.downloads.download({
   //   url: "data:text/plain," + myString,
