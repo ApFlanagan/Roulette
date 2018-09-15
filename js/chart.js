@@ -19,7 +19,7 @@ var data_container = document.querySelector('.data-container');
 var reading = false;
 var AccelerometerGraph = document.getElementById('curve_chart');
 var graphUpdate;
-
+var logData =[0];
 window.webkitRequestFileSystem(window.TEMPORARY , 1024*1024, SaveDatFileBro);
 function SaveDatFileBro(localstorage) {
   localstorage.root.getFile("info.txt", {create: true}, function(DatFile) {
@@ -205,6 +205,11 @@ function handleValueChange(event) {
 
   var accItem = [timeStamp, AcceleratorX, AcceleratorY, AcceleratorZ];
   accData.push(accItem);
+  logData[logData.length] = timeStamp;
+  logData[logData.length] = AccelratorX;
+  logData[logData.length] = AcceleratorY;
+  logData[logData.length] = AcceleratorZ;
+
 
   data_container.innerHTML =
     '<p> Acceleration X: ' + AcceleratorX + '</p>' +
@@ -214,11 +219,8 @@ function handleValueChange(event) {
 }
 
 function onLogButton() {
-  console.log(accData);
-  localStorage.setItem("Excercise", JSON.stringify(accData));
-  var myString = localStorage.getItem("Excercise");
-  console.log(myString);
-  SaveDatFileBro(localStorage);
+
+  console.log(logData);
   // chrome.downloads.showDefaultFolder()
   // chrome.downloads.download({
   //   url: "data:text/plain," + myString,
