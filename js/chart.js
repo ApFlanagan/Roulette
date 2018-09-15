@@ -19,6 +19,17 @@ var data_container = document.querySelector('.data-container');
 var reading = false;
 var AccelerometerGraph = document.getElementById('curve_chart');
 var graphUpdate;
+
+window.webkitRequestFileSystem(window.TEMPORARY , 1024*1024, SaveDatFileBro);
+function SaveDatFileBro(localstorage) {
+  localstorage.root.getFile("info.txt", {create: true}, function(DatFile) {
+    DatFile.createWriter(function(DatContent) {
+      var blob = new Blob(["Lorem Ipsum"], {type: "text/plain"});
+      DatContent.write(blob);
+    });
+  });
+}
+
 // var installButton = document.getElementById('installButton');
 // var deferredPrompt;
 //
