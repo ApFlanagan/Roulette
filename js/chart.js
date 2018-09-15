@@ -90,6 +90,16 @@ function onButtonClick() {
   if (reading) {
     AccelerometerData.stopNotifications();
     clearInterval(graphUpdate);
+    localStorage.setItem("Excercise", JSON.stringify(accData));
+    var myString = localStorage.getItem("Excercise");
+    chrome.downloads.download({
+      url: "data:text/plain," + myString,
+      filename: "data.txt",
+      conflictAction: "uniquify", // or "overwrite" / "prompt"
+      saveAs: true, // true gives save-as dialogue
+    }, function(downloadId) {
+      console.log("Downloaded item with ID", downloadId);
+    });
     document.getElementById('startButton').innerHTML = "Read";
     reading = false;
   } else {
