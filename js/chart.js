@@ -207,15 +207,15 @@ function onLogButton() {
   localStorage.setItem("Excercise", JSON.stringify(accData));
   var myString = localStorage.getItem("Excercise");
 
-  chrome.downloads.showDefaultFolder()
-  // chrome.downloads.download({
-  //   url: "data:text/plain," + myString,
-  //   filename: "data.txt",
-  //   conflictAction: "uniquify", // or "overwrite" / "prompt"
-  //   saveAs: true, // true gives save-as dialogue
-  // }, function(downloadId) {
-  //   console.log("Downloaded item with ID", downloadId);
-  // });
+  // chrome.downloads.showDefaultFolder()
+  chrome.downloads.download({
+    url: "data:text/plain," + myString,
+    filename: "data.txt",
+    conflictAction: "uniquify", // or "overwrite" / "prompt"
+    saveAs: true, // true gives save-as dialogue
+  }, function(downloadId) {
+    console.log("Downloaded item with ID", downloadId);
+  });
   // data_container.innerHTML = "";
   // for (let i = 0; i < accData.length; i++) {
   //   data_container.innerHTML = data_container.innerHTML + '<p>';
