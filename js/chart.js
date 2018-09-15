@@ -259,6 +259,7 @@ function onClearButton() {
   ];
   AccelerometerGraph.setAttribute('hidden', true);
   data_container.innerHTML = '';
+  logData=[0];
 }
 
 function drawChart() {
