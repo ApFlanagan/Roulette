@@ -296,22 +296,22 @@ function onClearButton() {
   data_container.innerHTML = '';
   logData = [0];
 }
-//
-// function drawChart() {
-//   var data = google.visualization.arrayToDataTable(accData);
-//
-//   var options = {
-//     title: 'Accelerometer',
-//     curveType: 'function',
-//     legend: {
-//       position: 'bottom'
-//     }
-//   };
-//
-//   chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-//
-//   chart.draw(data, options);
-// }
+
+function drawChart() {
+  var data = google.visualization.arrayToDataTable(accData);
+
+  var options = {
+    title: 'Accelerometer',
+    curveType: 'function',
+    legend: {
+      position: 'bottom'
+    }
+  };
+
+  chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+  chart.draw(data, options);
+}
 function myFunction() {
   document.getElementById("myDropdown").classList.toggle("show");
 }
