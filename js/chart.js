@@ -19,16 +19,17 @@ var data_container = document.querySelector('.data-container');
 var reading = false;
 var AccelerometerGraph = document.getElementById('curve_chart');
 var graphUpdate;
-var logData =[0];
-window.webkitRequestFileSystem(window.TEMPORARY , 1024*1024, SaveDatFileBro);
-function SaveDatFileBro(localstorage) {
-  localstorage.root.getFile("info.txt", {create: true}, function(DatFile) {
-    DatFile.createWriter(function(DatContent) {
-      var blob = new Blob(["Lorem Ipsum"], {type: "text/plain"});
-      DatContent.write(blob);
-    });
-  });
-}
+var logData = [0];
+var repCount = 0;
+// window.webkitRequestFileSystem(window.TEMPORARY , 1024*1024, SaveDatFileBro);
+// function SaveDatFileBro(localstorage) {
+//   localstorage.root.getFile("info.txt", {create: true}, function(DatFile) {
+//     DatFile.createWriter(function(DatContent) {
+//       var blob = new Blob(["Lorem Ipsum"], {type: "text/plain"});
+//       DatContent.write(blob);
+//     });
+//   });
+// }
 
 // var installButton = document.getElementById('installButton');
 // var deferredPrompt;
@@ -105,11 +106,11 @@ function onButtonClick() {
     reading = false;
   } else {
     reading = true;
-    graphUpdate = setInterval(function() {
-      AccelerometerGraph.removeAttribute('hidden');
-      google.charts.setOnLoadCallback(drawChart);
-    }, 20);
-    AccelerometerGraph.removeAttribute('hidden');
+    // graphUpdate = setInterval(function() {
+    //   AccelerometerGraph.removeAttribute('hidden');
+    //   google.charts.setOnLoadCallback(drawChart);
+    // }, 20);
+    // AccelerometerGraph.removeAttribute('hidden');
     return (AccelerometerService ? Promise.resolve() : onConnectClick())
       .then(_ => {
         console.log('Found Data Characteristic');
@@ -127,45 +128,45 @@ function onButtonClick() {
       });
   }
 }
+//
+// function onPeriodButtonClick() {
+//   return (AccelerometerService ? Promise.resolve() : onConnectClick())
+//     .then(_ => {
+//       console.log('Found Period Characteristic');
+//       return AccelerometerService.getCharacteristic(accPeriod);
+//     })
+//     .then(characteristic => {
+//       AccelerometerPeriod = characteristic;
+//       return AccelerometerPeriod.readValue();
+//     })
+//     .then(value => {
+//       console.log('Accelerometer period is: ' + value.getUint8(0));
+//     })
+//     .catch(error => {
+//       console.log('Argh! ' + error);
+//     });
+// }
 
-function onPeriodButtonClick() {
-  return (AccelerometerService ? Promise.resolve() : onConnectClick())
-    .then(_ => {
-      console.log('Found Period Characteristic');
-      return AccelerometerService.getCharacteristic(accPeriod);
-    })
-    .then(characteristic => {
-      AccelerometerPeriod = characteristic;
-      return AccelerometerPeriod.readValue();
-    })
-    .then(value => {
-      console.log('Accelerometer period is: ' + value.getUint8(0));
-    })
-    .catch(error => {
-      console.log('Argh! ' + error);
-    });
-}
-
-function setPeriodTo1() {
-  return (AccelerometerService ? Promise.resolve() : onConnectClick())
-    .then(_ => {
-      console.log('Found Period Characteristic');
-      return AccelerometerService.getCharacteristic(accPeriod);
-    })
-    .then(characteristic => {
-      AccelerometerPeriod = characteristic;
-      return AccelerometerPeriod.writeValue(Uint16Array.of(1));
-    })
-    .then(_ => {
-      return AccelerometerPeriod.readValue();
-    })
-    .then(value => {
-      console.log('New Accelerometer period is: ' + value.getUint8(0));
-    })
-    .catch(error => {
-      console.log('Argh! ' + error);
-    });
-}
+// function setPeriodTo1() {
+//   return (AccelerometerService ? Promise.resolve() : onConnectClick())
+//     .then(_ => {
+//       console.log('Found Period Characteristic');
+//       return AccelerometerService.getCharacteristic(accPeriod);
+//     })
+//     .then(characteristic => {
+//       AccelerometerPeriod = characteristic;
+//       return AccelerometerPeriod.writeValue(Uint16Array.of(1));
+//     })
+//     .then(_ => {
+//       return AccelerometerPeriod.readValue();
+//     })
+//     .then(value => {
+//       console.log('New Accelerometer period is: ' + value.getUint8(0));
+//     })
+//     .catch(error => {
+//       console.log('Argh! ' + error);
+//     });
+// }
 
 function onDisconnectButton() {
   if (!bluetoothDevice) {
@@ -205,6 +206,10 @@ function handleValueChange(event) {
 
   var accItem = [timeStamp, AcceleratorX, AcceleratorY, AcceleratorZ];
   accData.push(accItem);
+  checkForRep(length.accData);
+
+
+
   logData[logData.length] = timeStamp;
   logData[logData.length] = AcceleratorX;
   logData[logData.length] = AcceleratorY;
@@ -218,9 +223,39 @@ function handleValueChange(event) {
 
 }
 
+function checkForRep(ticks) {
+  ticksBegin = ticks - 100;
+  if (ticks < 100) {
+    ticksBegin = 0;
+  }
+  buf = accData.slice(ticksBegin, ticks);
+  if (isInArray(-1000, buf)) {
+    if (isinArray(-1400, buf)) {
+      repEvent();
+    }
+  }
+
+}
+
+function repEvent() {
+  repCount++;
+  data_container.innerHTML =
+    '<p> Rep Count = ' + repCount + '</p>';
+}
+
+function isInArray(value, array) {
+  return array.indexOf(value) > -1;
+}
+
 function onLogButton() {
   var logString = JSON.stringify(logData);
-  console.log(logString);
+  let newWindow = window.open("about:blank", "", "_blank");
+
+  let textBlock = logData
+
+  if (newWindow) {
+    newWindow.document.write(textBlock);
+  }
   // chrome.downloads.showDefaultFolder()
   // chrome.downloads.download({
   //   url: "data:text/plain," + myString,
@@ -259,21 +294,37 @@ function onClearButton() {
   ];
   AccelerometerGraph.setAttribute('hidden', true);
   data_container.innerHTML = '';
-  logData=[0];
+  logData = [0];
 }
-
-function drawChart() {
-  var data = google.visualization.arrayToDataTable(accData);
-
-  var options = {
-    title: 'Accelerometer',
-    curveType: 'function',
-    legend: {
-      position: 'bottom'
-    }
-  };
-
-  chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-  chart.draw(data, options);
+//
+// function drawChart() {
+//   var data = google.visualization.arrayToDataTable(accData);
+//
+//   var options = {
+//     title: 'Accelerometer',
+//     curveType: 'function',
+//     legend: {
+//       position: 'bottom'
+//     }
+//   };
+//
+//   chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+//
+//   chart.draw(data, options);
+// }
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
 }
+// window.onclick = function(event) {
+//   console.log('click');
+//   if (!event.target.matches('.dropbtn')) {
+//     var dropdowns = document.getElementsByClassName("dropdown-content");
+//     var i;
+//     for (i = 0; i < dropdowns.length; i++) {
+//       var openDropDown = dropdowns[i];
+//       if (openDropDown.classList.contains('show')) {
+//         openDropDown.classList.remove('show');
+//       }
+//     }
+//   }
+// }
