@@ -106,11 +106,11 @@ function onButtonClick() {
     reading = false;
   } else {
     reading = true;
-    // graphUpdate = setInterval(function() {
-    //   AccelerometerGraph.removeAttribute('hidden');
-    //   google.charts.setOnLoadCallback(drawChart);
-    // }, 20);
-    // AccelerometerGraph.removeAttribute('hidden');
+    graphUpdate = setInterval(function() {
+      AccelerometerGraph.removeAttribute('hidden');
+      google.charts.setOnLoadCallback(drawChart);
+    }, 20);
+    AccelerometerGraph.removeAttribute('hidden');
     return (AccelerometerService ? Promise.resolve() : onConnectClick())
       .then(_ => {
         console.log('Found Data Characteristic');
