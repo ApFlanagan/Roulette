@@ -19,7 +19,7 @@ var data_container = document.querySelector('.data-container');
 var reading = false;
 var AccelerometerGraph = document.getElementById('curve_chart');
 var graphUpdate;
-var logData = [0];
+var logData = [];
 var repCount = 0;
 // window.webkitRequestFileSystem(window.TEMPORARY , 1024*1024, SaveDatFileBro);
 // function SaveDatFileBro(localstorage) {
@@ -210,7 +210,7 @@ function handleValueChange(event) {
 
 
 
-  logData[logData.length] = timeStamp;
+  logData[logData.length] = "</br" + timeStamp;
   logData[logData.length] = AcceleratorX;
   logData[logData.length] = AcceleratorY;
   logData[logData.length] = AcceleratorZ;
@@ -294,7 +294,7 @@ function onClearButton() {
   ];
   AccelerometerGraph.setAttribute('hidden', true);
   data_container.innerHTML = '';
-  logData = [0];
+  logData = [];
 }
 
 function drawChart() {
